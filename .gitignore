@@ -1,2 +1,7 @@
 /TAGS
+/cscope.files
 /target/
+
+/.classpath
+/.project
+/.settings/
