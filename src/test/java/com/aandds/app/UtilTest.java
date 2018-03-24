@@ -59,4 +59,20 @@ public class UtilTest {
         assertEquals(13, Util.countMaxWidthInLines("abc中英文测试"));
         assertEquals(13, Util.countMaxWidthInLines("abc中英文测试\n1234"));
     }
+
+    @Test
+    public void testUntablify() {
+        String spaces = new String(new char[ConstXlsx.TAB_SIZE]).replace('\0', ' ');
+        assertEquals("abc", Util.untablify("abc"));
+        assertEquals(spaces + "abc", Util.untablify("\tabc"));
+        assertEquals(spaces + spaces + "abc", Util.untablify("\t\tabc"));
+        assertEquals(spaces + spaces + spaces + "abc", Util.untablify("\t\t\tabc"));
+        assertEquals("ab\tc", Util.untablify("ab\tc"));
+        assertEquals("abc", Util.untablify("abc\t"));
+        assertEquals("abc", Util.untablify("abc\t\t"));
+
+        // multiple lines
+        assertEquals("a\nbc", Util.untablify("a\nbc"));
+        assertEquals(spaces + "abc\n" + spaces + "xyz", Util.untablify("\tabc\n\txyz"));
+    }
 }

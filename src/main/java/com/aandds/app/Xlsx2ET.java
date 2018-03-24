@@ -100,6 +100,9 @@ public class Xlsx2ET {
                         currentCellContent = currentCell.toString();
                     }
 
+                    // Convert leading tabs to spaces, remove tailing tabs.
+                    currentCellContent = Util.untablify(currentCellContent);
+
                     logger.debug("Current column " + colIdx + ": [" + currentCellContent + "]");
 
                     maxLinesInCurrentRow = Util.getGreater(Util.countLines(currentCellContent), maxLinesInCurrentRow);

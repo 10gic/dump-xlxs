@@ -109,6 +109,18 @@ public class Util {
         return s.substring(0, i + 1);
     }
 
+    /*
+     * Convert leading tabs to spaces, remove tailing tabs.
+     */
+    public static String untablify(String s) {
+        String spaces = new String(new char[ConstXlsx.TAB_SIZE]).replace('\0', ' ');
+        // convert each leading tab to TAB_SIZE spaces
+        s = s.replaceAll("(?m)(?:^|\\G)\t", spaces);
+        // remove tailing tabs
+        s = s.replaceAll("(?m)\t*$", "");
+        return s;
+    }
+
     /*-
      * Example of emacs table hline:
      *  +-----+-----+---------+
