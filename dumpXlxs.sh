@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # dump xlsx to text-based table
 
@@ -35,18 +35,36 @@ while getopts "hd:t:r" opt; do
              ;;
     esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
+if [ ! "$1" ] ; then
+    printUsage
+    exit
+fi
+
+BASEDIR=$(dirname "$0")
+echo $BASEDIR
+JARFILE="$BASEDIR/target/dumpXlsx-1.0.jar"
+
+if [[ ! -f "$JARFILE" ]]; then
+    echo "Can't find dumpXlsx-1.0.jar, generate it" 1>&2
+    (cd "$BASEDIR";
+     mvn package
+     if [[ $? -ne 0 ]]; then
+         echo "Generate jar file failed." 1>&2
+         exit
+     fi)
+fi
 
 if [[ $reverse -eq 0 ]]; then
     if [[ $type == "emacs" ]]; then
-        java -Dorg.slf4j.simpleLogger.defaultLogLevel=${logLevel:-"info"} -jar target/dumpXlsx-1.0.jar "$@"
+        java -Dorg.slf4j.simpleLogger.defaultLogLevel="${logLevel:-info}" -jar "$JARFILE" "$@"
     elif
         [[ $type == "orgmode" ]]; then
-        java -Dorg.slf4j.simpleLogger.defaultLogLevel=${logLevel:-"info"} -cp target/dumpXlsx-1.0.jar com.aandds.app.Xlsx2OT "$@"
+        java -Dorg.slf4j.simpleLogger.defaultLogLevel="${logLevel:-info}" -cp "$JARFILE" com.aandds.app.Xlsx2OT "$@"
     else
         printUsage
         exit
     fi
 else
-    java -Dorg.slf4j.simpleLogger.defaultLogLevel=${logLevel:-"info"} -cp target/dumpXlsx-1.0.jar com.aandds.app.ET2Xlsx "$@"
+    java -Dorg.slf4j.simpleLogger.defaultLogLevel="${logLevel:-info}" -cp target/dumpXlsx-1.0.jar com.aandds.app.ET2Xlsx "$@"
 fi
