@@ -1,7 +1,7 @@
-A tool can dump xlsx to text-based table
+A tool can dump MS xlsx file to text-based table
 
-Two styles of text-based table are supported:
-emacs style (default style):
+Two output styles are supported:
+Style 1, Emacs style (default style):
 +------+------+
 | r1c1 | r1c2 |
 +------+------+
@@ -10,17 +10,14 @@ emacs style (default style):
 | r3c1 | r3c2 |
 +------+------+
 
-orgmode style:
+Style 2, Orgmode style:
 | r1c1 | r1c2 |
 |------|------|
 | r2c1 | r2c2 |
 | r3c1 | r3c2 |
 
 
-Simple steps:
-1. Generate jar file target/dumpXlsx-1.0.jar
-$ mvn package
-
-2. Run wrapper script:
-$ ./dumpXlxs.sh test.xlsx              # dump test.xlsx to text-based table (emacs style)
-$ ./dumpXlxs.sh -t orgmode test.xlsx   # dump test.xlsx to text-based table (orgmode style)
+Usage:
+Run wrapper script:
+$ ./dumpXlxs.sh test.xlsx              # dump test.xlsx to text-based table (Emacs style)
+$ ./dumpXlxs.sh -t orgmode test.xlsx   # dump test.xlsx to text-based table (Orgmode style)
