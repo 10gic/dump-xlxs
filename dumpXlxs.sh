@@ -42,7 +42,6 @@ if [ ! "$1" ] ; then
 fi
 
 BASEDIR=$(dirname "$0")
-echo $BASEDIR
 JARFILE="$BASEDIR/target/dumpXlsx-1.0.jar"
 
 if [[ ! -f "$JARFILE" ]]; then
